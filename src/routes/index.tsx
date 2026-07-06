@@ -490,52 +490,83 @@ function Hero() {
 /* ----------------------------- About ----------------------------- */
 
 function About() {
-  const highlights = ["Problem Solver", "Fast Learner", "Team Player", "Analytical Thinker", "Continuous Learner"];
+  const traits = [
+    { label: "Problem Solver", icon: "🧩" },
+    { label: "Fast Learner", icon: "⚡" },
+    { label: "Team Player", icon: "🤝" },
+    { label: "Analytical", icon: "📊" },
+    { label: "Curious", icon: "🔍" },
+  ];
   return (
     <Section id="about">
-      <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-        <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-highlight">
-            <span className="h-1.5 w-1.5 rounded-full bg-highlight" /> About Me
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold">Turning ideas into <span className="text-gradient">reliable software</span></h2>
-          <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
-            <p>My name is Sabarish Kumar Srinivasan. I enjoy turning innovative ideas into reliable software solutions.</p>
-            <p>As a passionate Java Full Stack Developer, I focus on creating scalable web applications, clean backend architectures, and intuitive user experiences.</p>
-            <p>I enjoy solving real-world challenges through software engineering while continuously expanding my knowledge of modern technologies including Spring Boot, REST APIs, Cloud Computing, and Full Stack Development.</p>
-            <p className="text-foreground">I believe continuous learning and problem-solving are the foundations of becoming a great engineer.</p>
-          </div>
-          <div className="mt-8 flex flex-wrap gap-2">
-            {highlights.map((h) => (
-              <span key={h} className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-sm">
-                <FaCheckCircle className="text-primary" /> {h}
-              </span>
-            ))}
+      <SectionHeader eyebrow="About Me" title="Turning ideas into reliable software" sub="A quick look at who I am, what I care about, and how I build." />
+
+      <div className="grid gap-5 md:grid-cols-6 md:grid-rows-2 md:auto-rows-fr">
+        {/* Story */}
+        <motion.div
+          variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
+          className="relative overflow-hidden rounded-3xl glass p-8 md:col-span-4 md:row-span-2"
+        >
+          <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
+          <div className="relative">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-black/30 px-3 py-1 font-mono text-[11px] text-highlight">
+              <span className="text-emerald-400">const</span> me =
+            </div>
+            <h3 className="text-2xl md:text-3xl font-semibold leading-tight">
+              I enjoy turning innovative ideas into{" "}
+              <span className="text-gradient">reliable, scalable software</span>.
+            </h3>
+            <div className="mt-5 space-y-3 text-sm md:text-base text-muted-foreground leading-relaxed">
+              <p>As a passionate Java Full Stack Developer, I focus on creating scalable web applications, clean backend architectures, and intuitive user experiences.</p>
+              <p>I enjoy solving real-world challenges through software engineering while continuously expanding my knowledge of Spring Boot, REST APIs, Cloud Computing, and Full Stack Development.</p>
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-white/10 bg-black/40 p-4 font-mono text-xs md:text-sm">
+              <div className="flex items-center gap-1.5 pb-3">
+                <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+                <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/70" />
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
+                <span className="ml-2 text-[10px] text-muted-foreground">philosophy.java</span>
+              </div>
+              <div className="space-y-1">
+                <div><span className="text-primary">public class</span> <span className="text-highlight">Engineer</span> {"{"}</div>
+                <div className="pl-4"><span className="text-primary">boolean</span> keepLearning = <span className="text-emerald-400">true</span>;</div>
+                <div className="pl-4"><span className="text-primary">String</span> mission = <span className="text-yellow-300">"Build. Solve. Improve."</span>;</div>
+                <div>{"}"}</div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              {traits.map((t) => (
+                <span key={t.label} className="inline-flex items-center gap-2 rounded-full glass px-3.5 py-1.5 text-sm">
+                  <span>{t.icon}</span>{t.label}
+                </span>
+              ))}
+            </div>
           </div>
         </motion.div>
 
-        <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-          className="grid grid-cols-2 gap-4">
-          {[
-            { n: 3, s: "+", label: "Projects Completed", icon: <FaProjectDiagram /> },
-            { n: 3, s: "+", label: "Training & Internships", icon: <FaBriefcase /> },
-            { n: 30, s: "+", label: "Technical Skills", icon: <FaCode /> },
-            { n: 7.54, d: 2, label: "CGPA / 10", icon: <FaGraduationCap /> },
-          ].map((s, i) => (
-            <div key={i} className="group relative overflow-hidden rounded-2xl glass p-6 transition-transform hover:-translate-y-1">
-              <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/0 to-primary/0 transition-all group-hover:from-primary/10 group-hover:to-highlight/10" />
-              <div className="mb-3 grid h-10 w-10 place-items-center rounded-xl bg-primary/15 text-primary">{s.icon}</div>
-              <div className="text-3xl md:text-4xl font-bold text-gradient">
-                <Counter to={s.n} decimals={s.d ?? 0} suffix={s.s ?? ""} />
-              </div>
-              <div className="mt-1 text-sm text-muted-foreground">{s.label}</div>
+        {/* Stats */}
+        {[
+          { n: 3, s: "+", label: "Projects Completed", icon: <FaProjectDiagram />, tone: "from-primary/25 to-primary/5" },
+          { n: 3, s: "+", label: "Training & Internships", icon: <FaBriefcase />, tone: "from-highlight/25 to-highlight/5" },
+          { n: 30, s: "+", label: "Technical Skills", icon: <FaCode />, tone: "from-purple-500/25 to-purple-500/5" },
+          { n: 7.54, d: 2, label: "CGPA / 10", icon: <FaGraduationCap />, tone: "from-emerald-500/25 to-emerald-500/5" },
+        ].map((s, i) => (
+          <motion.div
+            key={i}
+            variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
+            transition={{ delay: i * 0.06 }}
+            className={`relative overflow-hidden rounded-3xl glass p-5 md:col-span-1 md:row-span-1 ${i < 2 ? "" : ""}`}
+          >
+            <div className={`absolute inset-0 -z-10 bg-gradient-to-br ${s.tone}`} />
+            <div className="mb-2 grid h-9 w-9 place-items-center rounded-lg bg-white/10 text-primary">{s.icon}</div>
+            <div className="text-2xl md:text-3xl font-bold text-gradient">
+              <Counter to={s.n} decimals={s.d ?? 0} suffix={s.s ?? ""} />
             </div>
-          ))}
-          <div className="col-span-2 rounded-2xl glass p-5 text-center">
-            <div className="text-sm text-muted-foreground">Graduating</div>
-            <div className="text-2xl font-bold text-gradient">Class of 2025</div>
-          </div>
-        </motion.div>
+            <div className="mt-0.5 text-[11px] uppercase tracking-widest text-muted-foreground">{s.label}</div>
+          </motion.div>
+        ))}
       </div>
     </Section>
   );
@@ -545,7 +576,7 @@ function About() {
 
 const SKILL_GROUPS: { title: string; icon: React.ReactNode; items: { name: string; level: number; icon?: React.ReactNode }[] }[] = [
   {
-    title: "Programming Languages", icon: <FaCode />,
+    title: "Languages", icon: <FaCode />,
     items: [
       { name: "Java", level: 90, icon: <FaJava /> },
       { name: "SQL", level: 85, icon: <FaDatabase /> },
@@ -577,7 +608,7 @@ const SKILL_GROUPS: { title: string; icon: React.ReactNode; items: { name: strin
       { name: "MySQL", level: 88, icon: <SiMysql /> },
       { name: "JPA", level: 78 },
       { name: "DB Design", level: 80 },
-      { name: "CRUD Operations", level: 90 },
+      { name: "CRUD", level: 90 },
     ],
   },
   {
@@ -589,13 +620,13 @@ const SKILL_GROUPS: { title: string; icon: React.ReactNode; items: { name: strin
     ],
   },
   {
-    title: "Tools & Software Engineering", icon: <SiJetpackcompose />,
+    title: "Tools", icon: <SiJetpackcompose />,
     items: [
       { name: "Git & GitHub", level: 88, icon: <FaGitAlt /> },
       { name: "Eclipse", level: 85, icon: <SiEclipseide /> },
       { name: "VS Code", level: 90, icon: <VscVscode /> },
       { name: "Vercel", level: 80, icon: <SiVercel /> },
-      { name: "Agile / SDLC / DSA", level: 80 },
+      { name: "Agile / SDLC", level: 80 },
     ],
   },
 ];
@@ -604,42 +635,76 @@ function SkillBar({ level }: { level: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true });
   return (
-    <div ref={ref} className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/5">
+    <div ref={ref} className="relative mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-white/5">
       <motion.div
         initial={{ width: 0 }}
         animate={inView ? { width: `${level}%` } : {}}
         transition={{ duration: 1.2, ease: "easeOut" }}
-        className="h-full rounded-full bg-gradient-to-r from-primary to-highlight"
-      />
+        className="relative h-full rounded-full bg-gradient-to-r from-primary to-highlight"
+      >
+        <span className="absolute right-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-highlight shadow-[0_0_10px_rgba(6,182,212,0.9)]" />
+      </motion.div>
     </div>
   );
 }
 
 function Skills() {
+  const [active, setActive] = useState<string>("All");
+  const tabs = ["All", ...SKILL_GROUPS.map((g) => g.title)];
+  const visible = active === "All" ? SKILL_GROUPS : SKILL_GROUPS.filter((g) => g.title === active);
+
   return (
     <Section id="skills">
       <SectionHeader eyebrow="Toolkit" title="Skills & Technologies" sub="A modern stack for building scalable, maintainable, high-quality software." />
+
+      {/* Filter tabs */}
+      <div className="mb-10 flex flex-wrap justify-center gap-2">
+        {tabs.map((t) => {
+          const on = active === t;
+          return (
+            <button
+              key={t}
+              onClick={() => setActive(t)}
+              className={`rounded-full px-4 py-2 text-sm transition-all ${
+                on
+                  ? "bg-gradient-to-r from-primary to-highlight text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)]"
+                  : "glass hover:bg-white/10"
+              }`}
+            >
+              {t}
+            </button>
+          );
+        })}
+      </div>
+
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {SKILL_GROUPS.map((g, i) => (
-          <motion.div key={g.title}
+        {visible.map((g, i) => (
+          <motion.div
+            key={g.title}
+            layout
             variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }}
             transition={{ delay: i * 0.05 }}
             className="group relative overflow-hidden rounded-3xl glass p-6 transition-all hover:-translate-y-1 hover:shadow-[0_20px_60px_-20px_rgba(59,130,246,0.35)]"
           >
-            <div className="absolute -inset-px rounded-3xl opacity-0 transition-opacity group-hover:opacity-100 [background:linear-gradient(135deg,rgba(59,130,246,0.35),rgba(6,182,212,0.25))] [mask:linear-gradient(#000,#000)_content-box,linear-gradient(#000,#000)] [mask-composite:exclude] [-webkit-mask-composite:xor] p-px" />
-            <div className="mb-5 flex items-center gap-3">
-              <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-primary/25 to-highlight/25 text-primary text-lg">{g.icon}</div>
-              <h3 className="font-semibold">{g.title}</h3>
+            <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-primary/15 blur-3xl transition-opacity group-hover:bg-primary/25" />
+            <div className="mb-5 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-primary/25 to-highlight/25 text-primary text-lg">{g.icon}</div>
+                <h3 className="font-semibold">{g.title}</h3>
+              </div>
+              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+                {g.items.length} skills
+              </span>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               {g.items.map((s) => (
                 <div key={s.name}>
                   <div className="flex items-center justify-between text-sm">
                     <span className="flex items-center gap-2">
-                      {s.icon && <span className="text-muted-foreground">{s.icon}</span>}
+                      {s.icon && <span className="text-primary/80">{s.icon}</span>}
                       {s.name}
                     </span>
-                    <span className="text-xs text-muted-foreground">{s.level}%</span>
+                    <span className="font-mono text-[10px] text-muted-foreground">{s.level}%</span>
                   </div>
                   <SkillBar level={s.level} />
                 </div>
@@ -649,12 +714,21 @@ function Skills() {
         ))}
       </div>
 
-      <div className="mt-8 rounded-3xl glass p-6">
-        <div className="mb-3 text-sm uppercase tracking-widest text-highlight">Core Strengths</div>
-        <div className="flex flex-wrap gap-2">
-          {["Full Stack Development","API Integration","Clean Code","Problem Solving","Analytical Thinking","Team Collaboration","Adaptability"].map((t) => (
-            <span key={t} className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm">{t}</span>
-          ))}
+      {/* Core strengths */}
+      <div className="mt-8 relative overflow-hidden rounded-3xl glass p-6 md:p-8">
+        <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-highlight/15 blur-3xl" />
+        <div className="relative flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.25em] text-highlight">Core Strengths</div>
+            <div className="mt-1 text-lg font-semibold">The traits I bring to every engineering team</div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {["Full Stack","API Integration","Clean Code","Problem Solving","Analytical Thinking","Team Collaboration","Adaptability"].map((t) => (
+              <span key={t} className="rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs md:text-sm hover:border-primary/50 hover:text-primary transition-colors">
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </Section>
@@ -667,13 +741,15 @@ function Services() {
   const services = [
     {
       icon: <FaServer />, title: "Java Full Stack Development",
-      desc: "Develop scalable web applications using Java, Spring Boot, REST APIs, MySQL, HTML, CSS, and JavaScript.",
-      tags: ["Spring Boot", "REST", "MySQL"],
+      desc: "Scalable web applications with Java, Spring Boot, REST APIs, and MySQL — from database schema to responsive UI.",
+      tags: ["Spring Boot", "REST", "MySQL", "JPA"],
+      steps: ["Requirement analysis", "API & schema design", "Implementation & testing", "Deployment & handoff"],
     },
     {
       icon: <FaReact />, title: "Frontend Development",
-      desc: "Create responsive, modern, user-friendly interfaces focused on performance and user experience.",
-      tags: ["HTML/CSS", "JavaScript", "Responsive"],
+      desc: "Responsive, modern interfaces focused on performance, accessibility, and user experience across every device.",
+      tags: ["HTML/CSS", "JavaScript", "Responsive", "A11y"],
+      steps: ["UI planning", "Component build", "Interaction polish", "Performance audit"],
     },
   ];
   return (
@@ -681,21 +757,44 @@ function Services() {
       <SectionHeader eyebrow="What I Do" title="Services" sub="Focused capabilities I bring to every project." />
       <div className="grid gap-6 md:grid-cols-2">
         {services.map((s, i) => (
-          <motion.div key={i}
+          <motion.div
+            key={i}
             variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="group relative overflow-hidden rounded-3xl glass p-8"
+            className="group relative overflow-hidden rounded-3xl p-[1px]"
           >
-            <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary/20 blur-3xl transition-all group-hover:bg-primary/30" />
-            <div className="relative">
-              <div className="mb-6 grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-primary to-highlight text-2xl text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)]">
-                {s.icon}
-              </div>
-              <h3 className="text-2xl font-semibold">{s.title}</h3>
-              <p className="mt-3 text-muted-foreground">{s.desc}</p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {s.tags.map((t) => (
-                  <span key={t} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs">{t}</span>
-                ))}
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/40 via-white/5 to-highlight/40 opacity-70 transition-opacity group-hover:opacity-100" />
+            <div className="relative h-full rounded-3xl glass-strong p-8">
+              <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary/20 blur-3xl transition-all group-hover:bg-primary/30" />
+              <div className="relative">
+                <div className="flex items-start justify-between">
+                  <div className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-primary to-highlight text-2xl text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)]">
+                    {s.icon}
+                  </div>
+                  <span className="font-mono text-4xl text-white/10">0{i + 1}</span>
+                </div>
+                <h3 className="mt-6 text-2xl font-semibold">{s.title}</h3>
+                <p className="mt-3 text-muted-foreground">{s.desc}</p>
+
+                <div className="mt-6 grid grid-cols-2 gap-2">
+                  {s.steps.map((step, j) => (
+                    <div key={step} className="flex items-center gap-2 rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-xs">
+                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-md bg-primary/20 font-mono text-[10px] text-primary">
+                        {j + 1}
+                      </span>
+                      {step}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {s.tags.map((t) => (
+                    <span key={t} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs">{t}</span>
+                  ))}
+                </div>
+
+                <a href="#contact" className="mt-6 inline-flex items-center gap-2 text-sm text-primary hover:text-highlight">
+                  Start a project <FaChevronRight className="text-[10px] transition-transform group-hover:translate-x-1" />
+                </a>
               </div>
             </div>
           </motion.div>
@@ -712,6 +811,9 @@ const EXPERIENCE = [
     role: "Java Full Stack Development Trainee",
     org: "QSpiders Training Institute",
     date: "May 2025 – Apr 2026",
+    type: "Training",
+    icon: <FaJava />,
+    tone: "from-[#f89820]/30 to-primary/20",
     points: ["Core & Advanced Java, SQL, Spring Boot, REST APIs",
              "Built Personal Budget Tracker (Java + MySQL)",
              "Built Employee Management REST API (Spring Boot + JPA)",
@@ -721,6 +823,9 @@ const EXPERIENCE = [
     role: "Cloud Computing Intern",
     org: "The Mind IT Solution",
     date: "Jul 2024 – Aug 2024",
+    type: "Internship",
+    icon: <FaCloud />,
+    tone: "from-highlight/30 to-primary/20",
     points: ["Cloud infrastructure fundamentals",
              "Cost optimization strategies",
              "Secure cloud architecture patterns",
@@ -730,6 +835,9 @@ const EXPERIENCE = [
     role: "Virtual Job Simulations",
     org: "Forage · Wells Fargo · Deloitte · Tata GenAI",
     date: "May 2026 – Jun 2026",
+    type: "Simulation",
+    icon: <FaBriefcase />,
+    tone: "from-purple-500/30 to-primary/20",
     points: ["Software Engineering practices",
              "Data Analytics workflows",
              "AI Analytics fundamentals",
@@ -741,33 +849,50 @@ function Experience() {
   return (
     <Section id="experience">
       <SectionHeader eyebrow="Journey" title="Experience" sub="Training, internship, and simulation programs shaping my engineering foundation." />
-      <div className="relative mx-auto max-w-4xl">
-        <div className="absolute left-4 md:left-1/2 top-0 h-full w-px bg-gradient-to-b from-primary/60 via-highlight/40 to-transparent md:-translate-x-1/2" />
-        <div className="space-y-10">
-          {EXPERIENCE.map((e, i) => (
-            <motion.div key={i}
-              variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}
-              className={`relative grid md:grid-cols-2 gap-6 md:gap-12 ${i % 2 ? "md:[direction:rtl]" : ""}`}
-            >
-              <div className="absolute left-4 md:left-1/2 top-6 h-4 w-4 -translate-x-1/2 rounded-full bg-gradient-to-br from-primary to-highlight ring-4 ring-background shadow-[0_0_20px_rgba(59,130,246,0.7)]" />
-              <div className={`pl-12 md:pl-0 ${i % 2 ? "md:pr-12" : "md:pl-12"} [direction:ltr]`}>
-                <div className="rounded-2xl glass p-6">
-                  <div className="text-xs uppercase tracking-widest text-highlight">{e.date}</div>
-                  <h3 className="mt-2 text-xl font-semibold">{e.role}</h3>
-                  <div className="text-sm text-muted-foreground">{e.org}</div>
-                  <ul className="mt-4 space-y-2 text-sm">
-                    {e.points.map((p) => (
-                      <li key={p} className="flex gap-2">
-                        <FaChevronRight className="mt-1 shrink-0 text-primary" />
-                        <span>{p}</span>
-                      </li>
-                    ))}
-                  </ul>
+      <div className="relative mx-auto max-w-5xl">
+        {/* Central spine */}
+        <div className="absolute left-6 md:left-1/2 top-0 h-full w-px bg-gradient-to-b from-primary/70 via-highlight/40 to-transparent md:-translate-x-1/2" />
+
+        <div className="space-y-12">
+          {EXPERIENCE.map((e, i) => {
+            const rightSide = i % 2 === 1;
+            return (
+              <motion.div
+                key={i}
+                variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}
+                className="relative grid md:grid-cols-2 md:gap-16"
+              >
+                {/* Node */}
+                <div className="absolute left-6 md:left-1/2 top-6 -translate-x-1/2 z-10">
+                  <div className="relative grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-highlight text-primary-foreground shadow-[0_0_25px_rgba(59,130,246,0.6)] ring-4 ring-background">
+                    {e.icon}
+                  </div>
                 </div>
-              </div>
-              <div />
-            </motion.div>
-          ))}
+
+                <div className={`${rightSide ? "md:col-start-2" : ""} pl-16 md:pl-0 ${rightSide ? "md:pl-16" : "md:pr-16 md:text-right"}`}>
+                  <div className={`relative overflow-hidden rounded-2xl glass-strong p-6 transition-all hover:-translate-y-1 hover:shadow-[0_20px_60px_-20px_rgba(59,130,246,0.4)]`}>
+                    <div className={`absolute inset-0 -z-10 bg-gradient-to-br ${e.tone} opacity-40`} />
+                    <div className={`flex items-center gap-2 ${rightSide ? "md:justify-start" : "md:justify-end"}`}>
+                      <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-[10px] uppercase tracking-widest text-highlight">
+                        {e.type}
+                      </span>
+                      <span className="font-mono text-[10px] text-muted-foreground">{e.date}</span>
+                    </div>
+                    <h3 className="mt-3 text-lg md:text-xl font-semibold">{e.role}</h3>
+                    <div className="text-sm text-muted-foreground">{e.org}</div>
+                    <ul className={`mt-4 space-y-1.5 text-sm ${rightSide ? "md:text-left" : "md:text-right"}`}>
+                      {e.points.map((p) => (
+                        <li key={p} className={`flex gap-2 ${rightSide ? "" : "md:flex-row-reverse"}`}>
+                          <FaChevronRight className={`mt-1 shrink-0 text-primary text-[10px] ${rightSide ? "" : "md:rotate-180"}`} />
+                          <span>{p}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </Section>
@@ -777,33 +902,63 @@ function Experience() {
 /* ----------------------------- Education ----------------------------- */
 
 function Education() {
+  const courses = ["Data Structures", "Algorithms", "DBMS", "Operating Systems", "Software Engineering", "Computer Networks", "OOP", "Web Technologies"];
   return (
     <Section id="education">
       <SectionHeader eyebrow="Academia" title="Education" />
       <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-        className="mx-auto max-w-3xl">
-        <div className="relative overflow-hidden rounded-3xl glass-strong p-8 md:p-10">
-          <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-highlight/20 blur-3xl" />
-          <div className="flex items-start gap-6">
-            <motion.div
-              animate={{ y: [0, -6, 0] }} transition={{ duration: 3, repeat: Infinity }}
-              className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-primary to-highlight text-3xl text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)]"
-            >
-              <FaGraduationCap />
-            </motion.div>
-            <div className="flex-1">
-              <div className="text-xs uppercase tracking-widest text-highlight">2021 – 2025</div>
-              <h3 className="mt-1 text-2xl font-bold">Bachelor of Engineering</h3>
+        className="mx-auto max-w-4xl">
+        <div className="relative overflow-hidden rounded-3xl glass-strong">
+          <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-highlight/20 blur-3xl" />
+          <div className="absolute -left-20 -bottom-20 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
+
+          <div className="relative grid gap-8 p-8 md:grid-cols-[auto_1fr] md:p-10">
+            <div className="flex md:flex-col items-center md:items-start gap-4">
+              <motion.div
+                animate={{ y: [0, -6, 0] }} transition={{ duration: 3, repeat: Infinity }}
+                className="grid h-20 w-20 shrink-0 place-items-center rounded-3xl bg-gradient-to-br from-primary to-highlight text-4xl text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)]"
+              >
+                <FaGraduationCap />
+              </motion.div>
+              <div className="md:mt-2">
+                <div className="text-[10px] uppercase tracking-[0.25em] text-highlight">2021 – 2025</div>
+                <div className="mt-1 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300 inline-flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Graduating soon
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-2xl md:text-3xl font-bold">Bachelor of Engineering</h3>
               <div className="text-muted-foreground">Computer Science and Engineering</div>
               <div className="mt-1 text-sm text-muted-foreground">Arasu Engineering College · Anna University</div>
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="rounded-xl bg-white/5 p-4">
-                  <div className="text-xs text-muted-foreground">CGPA</div>
-                  <div className="text-2xl font-bold text-gradient">7.54 / 10</div>
+
+              <div className="mt-6 grid grid-cols-3 gap-3">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground">CGPA</div>
+                  <div className="text-2xl font-bold text-gradient">7.54</div>
+                  <div className="text-[10px] text-muted-foreground">/ 10.00</div>
                 </div>
-                <div className="rounded-xl bg-white/5 p-4">
-                  <div className="text-xs text-muted-foreground">Graduation</div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Batch</div>
                   <div className="text-2xl font-bold text-gradient">2025</div>
+                  <div className="text-[10px] text-muted-foreground">Class of</div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Degree</div>
+                  <div className="text-2xl font-bold text-gradient">B.E.</div>
+                  <div className="text-[10px] text-muted-foreground">CSE</div>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <div className="mb-2 text-[10px] uppercase tracking-[0.25em] text-highlight">Relevant Coursework</div>
+                <div className="flex flex-wrap gap-2">
+                  {courses.map((c) => (
+                    <span key={c} className="rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs">
+                      {c}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -822,16 +977,21 @@ const PROJECTS = [
     desc: "Decentralized file storage with tamper-proof verification and immutable audit trails, boosting integrity verification by 35%.",
     tech: ["Java", "Solidity", "Ethereum", "SHA-256", "MySQL"],
     features: ["Blockchain file storage", "Tamper-proof verification", "Immutable audit trails", "Automated file validation"],
-    gradient: "from-primary/40 to-highlight/20",
+    gradient: "from-primary/40 via-purple-500/25 to-highlight/20",
     icon: "🔐",
+    metric: "+35%",
+    metricLabel: "integrity verification",
+    featured: true,
   },
   {
     title: "Personal Budget Tracker",
-    desc: "Java desktop app with MySQL persistence for CRUD-based expense tracking and monthly reporting — reduced manual tracking effort by 40%.",
+    desc: "Java desktop app with MySQL persistence for CRUD-based expense tracking and monthly reporting.",
     tech: ["Java", "MySQL", "JDBC"],
     features: ["CRUD Operations", "Expense Tracking", "Monthly Reports", "Data Persistence"],
-    gradient: "from-highlight/40 to-primary/20",
+    gradient: "from-emerald-400/40 to-highlight/20",
     icon: "💰",
+    metric: "−40%",
+    metricLabel: "manual tracking effort",
   },
   {
     title: "Employee Management REST API",
@@ -840,50 +1000,77 @@ const PROJECTS = [
     features: ["Employee CRUD", "RESTful APIs", "MVC Architecture", "Database Optimization"],
     gradient: "from-primary/40 to-purple-500/20",
     icon: "🧩",
+    metric: "REST",
+    metricLabel: "MVC architecture",
   },
 ];
 
+function ProjectCard({ p, i, featured }: { p: typeof PROJECTS[number]; i: number; featured?: boolean }) {
+  return (
+    <motion.article
+      variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }}
+      transition={{ delay: i * 0.08 }}
+      className={`group relative flex flex-col overflow-hidden rounded-3xl glass transition-all hover:-translate-y-2 hover:shadow-[0_30px_80px_-20px_rgba(59,130,246,0.45)] ${featured ? "md:col-span-2 md:flex-row" : ""}`}
+    >
+      <div className={`relative overflow-hidden bg-gradient-to-br ${p.gradient} ${featured ? "md:w-1/2 md:min-h-[380px]" : "aspect-[16/10]"}`}>
+        <div className="absolute inset-0 grid-bg opacity-40" />
+        <div className="absolute inset-0 grid place-items-center text-7xl md:text-8xl">{p.icon}</div>
+        <div className="absolute top-3 left-3 rounded-full glass-strong px-3 py-1 font-mono text-[10px]">
+          PROJECT_0{i + 1}
+        </div>
+        {featured && (
+          <div className="absolute top-3 right-3 rounded-full bg-gradient-to-r from-primary to-highlight px-3 py-1 text-[10px] font-semibold text-primary-foreground">
+            ★ Featured
+          </div>
+        )}
+        <div className="absolute bottom-3 left-3 rounded-2xl glass-strong px-3 py-2">
+          <div className="text-lg font-bold text-gradient">{p.metric}</div>
+          <div className="text-[9px] uppercase tracking-widest text-muted-foreground">{p.metricLabel}</div>
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="text-lg md:text-xl font-semibold">{p.title}</h3>
+        <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
+        <ul className={`mt-4 space-y-1 text-sm ${featured ? "md:grid md:grid-cols-2 md:gap-x-4 md:space-y-0" : ""}`}>
+          {p.features.map((f) => (
+            <li key={f} className="flex gap-2"><FaCheckCircle className="mt-1 shrink-0 text-primary text-xs" /><span>{f}</span></li>
+          ))}
+        </ul>
+        <div className="mt-5 flex flex-wrap gap-1.5">
+          {p.tech.map((t) => (
+            <span key={t} className="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-mono">{t}</span>
+          ))}
+        </div>
+        <div className="mt-6 flex gap-2">
+          <a href="https://github.com/au820621104070" target="_blank" rel="noreferrer"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-white/5 px-4 py-2 text-sm hover:bg-white/10">
+            <FaGithub /> GitHub
+          </a>
+          <a href="#" className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-highlight px-4 py-2 text-sm text-primary-foreground">
+            <FaExternalLinkAlt className="text-xs" /> Live
+          </a>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
 function Projects() {
+  const [featured, ...rest] = PROJECTS;
   return (
     <Section id="projects">
       <SectionHeader eyebrow="Selected Work" title="Featured Projects" sub="A snapshot of what I've built while learning and applying full-stack engineering." />
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {PROJECTS.map((p, i) => (
-          <motion.article key={p.title}
-            variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }}
-            transition={{ delay: i * 0.08 }}
-            className="group relative flex flex-col overflow-hidden rounded-3xl glass transition-all hover:-translate-y-2 hover:shadow-[0_30px_80px_-20px_rgba(59,130,246,0.45)]"
-          >
-            <div className={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${p.gradient}`}>
-              <div className="absolute inset-0 grid-bg opacity-40" />
-              <div className="absolute inset-0 grid place-items-center text-7xl">{p.icon}</div>
-              <div className="absolute bottom-3 left-3 rounded-full glass-strong px-3 py-1 text-xs">Project 0{i + 1}</div>
-            </div>
-            <div className="flex flex-1 flex-col p-6">
-              <h3 className="text-lg font-semibold">{p.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
-              <ul className="mt-4 space-y-1 text-sm">
-                {p.features.map((f) => (
-                  <li key={f} className="flex gap-2"><FaCheckCircle className="mt-1 shrink-0 text-primary text-xs" /><span>{f}</span></li>
-                ))}
-              </ul>
-              <div className="mt-5 flex flex-wrap gap-1.5">
-                {p.tech.map((t) => (
-                  <span key={t} className="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-mono">{t}</span>
-                ))}
-              </div>
-              <div className="mt-6 flex gap-2">
-                <a href="https://github.com/au820621104070" target="_blank" rel="noreferrer"
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-white/5 px-4 py-2 text-sm hover:bg-white/10">
-                  <FaGithub /> GitHub
-                </a>
-                <a href="#" className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-highlight px-4 py-2 text-sm text-primary-foreground">
-                  <FaExternalLinkAlt className="text-xs" /> Live
-                </a>
-              </div>
-            </div>
-          </motion.article>
+      <div className="grid gap-6 md:grid-cols-2">
+        <ProjectCard p={featured} i={0} featured />
+        {rest.map((p, i) => (
+          <ProjectCard key={p.title} p={p} i={i + 1} />
         ))}
+      </div>
+      <div className="mt-10 text-center">
+        <a href="https://github.com/au820621104070" target="_blank" rel="noreferrer"
+          className="inline-flex items-center gap-2 rounded-full glass px-6 py-3 text-sm font-medium hover:bg-white/10">
+          Explore all repositories on GitHub <FaExternalLinkAlt className="text-[10px]" />
+        </a>
       </div>
     </Section>
   );
@@ -892,11 +1079,11 @@ function Projects() {
 /* ----------------------------- Certifications ----------------------------- */
 
 const CERTS = [
-  { title: "Java Full Stack Training", org: "QSpiders", color: "from-primary to-highlight" },
-  { title: "Cloud Computing Internship", org: "The Mind IT Solution", color: "from-highlight to-primary" },
-  { title: "Software Engineering", org: "Wells Fargo · Forage", color: "from-primary to-purple-500" },
-  { title: "Data Analytics", org: "Deloitte · Forage", color: "from-emerald-500 to-primary" },
-  { title: "GenAI Data Analytics", org: "Tata · Forage", color: "from-highlight to-emerald-400" },
+  { title: "Java Full Stack Training", org: "QSpiders", year: "2025 – 26", color: "from-primary to-highlight", id: "JFS-2025" },
+  { title: "Cloud Computing Internship", org: "The Mind IT Solution", year: "Aug 2024", color: "from-highlight to-primary", id: "CC-2024" },
+  { title: "Software Engineering", org: "Wells Fargo · Forage", year: "Jun 2026", color: "from-primary to-purple-500", id: "WF-SE" },
+  { title: "Data Analytics", org: "Deloitte · Forage", year: "Jun 2026", color: "from-emerald-500 to-primary", id: "DEL-DA" },
+  { title: "GenAI Data Analytics", org: "Tata · Forage", year: "Jun 2026", color: "from-highlight to-emerald-400", id: "TATA-GAI" },
 ];
 
 function Certifications() {
@@ -905,24 +1092,35 @@ function Certifications() {
       <SectionHeader eyebrow="Recognition" title="Certifications" sub="Programs completed to deepen my engineering foundation." />
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {CERTS.map((c, i) => (
-          <motion.div key={c.title}
+          <motion.div
+            key={c.title}
             variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }}
             transition={{ delay: i * 0.05 }}
-            className="group relative overflow-hidden rounded-3xl glass p-6"
+            className="group relative overflow-hidden rounded-3xl p-[1px]"
           >
-            <div className={`absolute -right-14 -top-14 h-40 w-40 rounded-full bg-gradient-to-br ${c.color} opacity-30 blur-2xl transition-opacity group-hover:opacity-60`} />
-            <div className="relative flex items-start gap-4">
-              <motion.div
-                whileHover={{ rotate: 15, scale: 1.1 }}
-                className={`grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${c.color} text-2xl text-primary-foreground shadow-lg`}
-              >
-                <FaAward />
-              </motion.div>
-              <div>
-                <h3 className="font-semibold">{c.title}</h3>
+            <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${c.color} opacity-50 transition-opacity group-hover:opacity-100`} />
+            <div className="relative h-full rounded-3xl glass-strong p-6">
+              <div className={`absolute -right-14 -top-14 h-40 w-40 rounded-full bg-gradient-to-br ${c.color} opacity-30 blur-2xl transition-opacity group-hover:opacity-60`} />
+              <div className="relative">
+                <div className="flex items-start justify-between">
+                  <motion.div
+                    whileHover={{ rotate: 12, scale: 1.05 }}
+                    className={`grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br ${c.color} text-2xl text-primary-foreground shadow-lg`}
+                  >
+                    <FaAward />
+                  </motion.div>
+                  <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+                    {c.year}
+                  </span>
+                </div>
+                <h3 className="mt-5 font-semibold">{c.title}</h3>
                 <div className="text-sm text-muted-foreground">{c.org}</div>
-                <div className="mt-3 inline-flex items-center gap-1 text-xs text-highlight">
-                  Verified <FaCheckCircle />
+
+                <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4">
+                  <div className="font-mono text-[10px] text-muted-foreground">ID · {c.id}</div>
+                  <div className="inline-flex items-center gap-1 text-xs text-highlight">
+                    <FaCheckCircle /> Verified
+                  </div>
                 </div>
               </div>
             </div>
@@ -954,58 +1152,83 @@ function Contact() {
       <SectionHeader eyebrow="Let's Connect" title="Get in Touch" sub="Have a project, role, or idea in mind? I'd love to hear from you." />
       <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
         <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-          className="rounded-3xl glass p-8">
-          <h3 className="text-xl font-semibold">Contact information</h3>
-          <p className="mt-2 text-sm text-muted-foreground">Available for full-time roles, internships, and freelance collaborations.</p>
-          <div className="mt-6 space-y-3">
-            {details.map((d) => (
-              <a key={d.label} href={d.href ?? "#"} target={d.href?.startsWith("http") ? "_blank" : undefined} rel="noreferrer"
-                className="group flex items-center gap-4 rounded-2xl border border-white/5 bg-white/[0.03] p-4 transition-all hover:border-primary/40 hover:bg-white/[0.06]">
-                <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/15 text-primary">{d.icon}</div>
-                <div className="min-w-0">
-                  <div className="text-xs uppercase tracking-widest text-muted-foreground">{d.label}</div>
-                  <div className="truncate text-sm">{d.value}</div>
-                </div>
-              </a>
-            ))}
+          className="relative overflow-hidden rounded-3xl glass-strong p-8">
+          <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary/20 blur-3xl" />
+          <div className="relative">
+            <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-[11px]">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              <span className="text-muted-foreground">Currently accepting new opportunities</span>
+            </div>
+            <h3 className="mt-4 text-2xl font-semibold">Let's build something together</h3>
+            <p className="mt-2 text-sm text-muted-foreground">Available for full-time roles, internships, and freelance collaborations.</p>
+
+            <div className="mt-6 space-y-2.5">
+              {details.map((d) => (
+                <a key={d.label} href={d.href ?? "#"} target={d.href?.startsWith("http") ? "_blank" : undefined} rel="noreferrer"
+                  className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 transition-all hover:border-primary/40 hover:bg-white/[0.06] hover:translate-x-1">
+                  <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-primary/25 to-highlight/25 text-primary">{d.icon}</div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{d.label}</div>
+                    <div className="truncate text-sm">{d.value}</div>
+                  </div>
+                  <FaChevronRight className="text-[10px] text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+                </a>
+              ))}
+            </div>
+
+            <a href="#" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-highlight px-6 py-3 font-medium text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)] hover:scale-[1.02] transition-transform">
+              <FaDownload /> Download Resume
+            </a>
           </div>
-          <a href="#" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-highlight px-6 py-3 font-medium text-primary-foreground">
-            <FaDownload /> Download Resume
-          </a>
         </motion.div>
 
         <motion.form onSubmit={submit}
           variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-          className="rounded-3xl glass p-8">
-          <div className="grid gap-4 md:grid-cols-2">
-            <label className="block">
-              <span className="text-xs uppercase tracking-widest text-muted-foreground">Name</span>
-              <input required maxLength={100} className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30" placeholder="Your name" />
+          className="relative overflow-hidden rounded-3xl glass-strong p-8">
+          <div className="absolute -left-20 -bottom-20 h-56 w-56 rounded-full bg-highlight/20 blur-3xl" />
+          <div className="relative">
+            <div className="mb-6 flex items-center gap-2 rounded-md border border-white/10 bg-black/30 px-3 py-1.5 font-mono text-[11px] text-highlight w-fit">
+              <span className="text-emerald-400">POST</span>
+              <span className="text-white/40">/api/</span>
+              <span>contact</span>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              <label className="block">
+                <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Name</span>
+                <input required maxLength={100} className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/30" placeholder="Your name" />
+              </label>
+              <label className="block">
+                <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Email</span>
+                <input required type="email" maxLength={255} className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/30" placeholder="you@company.com" />
+              </label>
+            </div>
+            <label className="mt-4 block">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Subject</span>
+              <input required maxLength={150} className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/30" placeholder="Let's build something great" />
             </label>
-            <label className="block">
-              <span className="text-xs uppercase tracking-widest text-muted-foreground">Email</span>
-              <input required type="email" maxLength={255} className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30" placeholder="you@company.com" />
+            <label className="mt-4 block">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Message</span>
+              <textarea required maxLength={1000} rows={6} className="mt-2 w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/30" placeholder="Tell me about your project or opportunity..." />
             </label>
+            <button type="submit" disabled={status !== "idle"}
+              className="group relative mt-6 inline-flex items-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-primary to-highlight px-7 py-3 font-medium text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)] transition-transform hover:scale-[1.02] disabled:opacity-70">
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/30 to-white/0 transition-transform duration-700 group-hover:translate-x-full" />
+              <span className="relative flex items-center gap-2">
+                {status === "sent" ? (<><FaCheckCircle /> Message sent</>)
+                  : status === "sending" ? "Sending..."
+                  : (<>Send Message <FaPaperPlane className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></>)}
+              </span>
+            </button>
           </div>
-          <label className="mt-4 block">
-            <span className="text-xs uppercase tracking-widest text-muted-foreground">Subject</span>
-            <input required maxLength={150} className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30" placeholder="Let's build something great" />
-          </label>
-          <label className="mt-4 block">
-            <span className="text-xs uppercase tracking-widest text-muted-foreground">Message</span>
-            <textarea required maxLength={1000} rows={6} className="mt-2 w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30" placeholder="Tell me about your project or opportunity..." />
-          </label>
-          <button type="submit" disabled={status !== "idle"}
-            className="group mt-6 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-primary to-highlight px-7 py-3 font-medium text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)] transition-transform hover:scale-[1.02] disabled:opacity-70">
-            {status === "sent" ? (<><FaCheckCircle /> Message sent</>)
-              : status === "sending" ? "Sending..."
-              : (<>Send Message <FaPaperPlane className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></>)}
-          </button>
         </motion.form>
       </div>
     </Section>
   );
 }
+
 
 /* ----------------------------- Footer + Back to top ----------------------------- */
 
