@@ -13,6 +13,7 @@ import {
 } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
 import heroPortrait from "@/assets/hero-portrait.jpg";
+import emailjs from "@emailjs/browser";
 
 export const Route = createFileRoute("/")({
   component: Portfolio,
@@ -288,7 +289,7 @@ function Hero() {
               <FaChevronRight className="relative transition-transform group-hover:translate-x-1" />
             </a>
             <a
-              href="#"
+              href="/sabarish-kumar-CV.pdf"
               className="inline-flex items-center gap-2 rounded-full glass px-6 py-3 font-medium hover:bg-white/10"
             >
               <FaDownload /> Resume
@@ -1135,11 +1136,25 @@ function Certifications() {
 
 function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("sending");
-    setTimeout(() => setStatus("sent"), 900);
-  };
+const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setStatus("sending");
+
+  try {
+  await emailjs.sendForm(
+    "service_nsbtmlw",
+    "template_6nrr1bf",
+    e.currentTarget,
+    "yvXJSh7tuZPB2sBjz"
+  );
+
+  setStatus("sent");
+} catch (error) {
+  console.error(error);
+  setStatus("idle");
+  alert("Failed to send message");
+}
+};
   const details = [
     { icon: <FaEnvelope />, label: "Email", value: "sabarishsri03@gmail.com", href: "mailto:sabarishsri03@gmail.com" },
     { icon: <FaPhone />, label: "Phone", value: "+91 8248353887", href: "tel:+918248353887" },
@@ -1179,13 +1194,13 @@ function Contact() {
               ))}
             </div>
 
-            <a href="#" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-highlight px-6 py-3 font-medium text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)] hover:scale-[1.02] transition-transform">
+            <a href="/sabarish-kumar-CV.pdf" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-highlight px-6 py-3 font-medium text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)] hover:scale-[1.02] transition-transform">
               <FaDownload /> Download Resume
             </a>
           </div>
         </motion.div>
 
-        <motion.form onSubmit={submit}
+        <form onSubmit={submit}
           variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
           className="relative overflow-hidden rounded-3xl glass-strong p-8">
           <div className="absolute -left-20 -bottom-20 h-56 w-56 rounded-full bg-highlight/20 blur-3xl" />
@@ -1223,7 +1238,7 @@ function Contact() {
               </span>
             </button>
           </div>
-        </motion.form>
+        </form>
       </div>
     </Section>
   );
