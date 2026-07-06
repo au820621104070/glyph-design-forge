@@ -156,74 +156,183 @@ function Hero() {
   ]), []);
   const typed = useTypedText(roles);
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 100]);
+  const yParallax = useTransform(scrollY, [0, 500], [0, 100]);
+
+  // Cursor spotlight
+  const heroRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+      el.style.setProperty("--my", `${e.clientY - r.top}px`);
+    };
+    el.addEventListener("mousemove", onMove);
+    return () => el.removeEventListener("mousemove", onMove);
+  }, []);
+
+  const stack = ["Java", "Spring Boot", "MySQL", "REST APIs", "JPA", "JavaScript", "HTML5", "CSS3", "Git", "Cloud", "Agile", "MVC"];
+  const orbitTech = [
+    { icon: <FaJava />, color: "text-[#f89820]" },
+    { icon: <SiSpringboot />, color: "text-emerald-400" },
+    { icon: <SiMysql />, color: "text-sky-400" },
+    { icon: <FaJs />, color: "text-yellow-300" },
+    { icon: <FaGitAlt />, color: "text-orange-400" },
+    { icon: <FaCloud />, color: "text-highlight" },
+  ];
 
   return (
-    <section id="home" className="relative min-h-screen overflow-hidden pt-32 pb-16">
-      {/* Animated background */}
-      <div className="pointer-events-none absolute inset-0 grid-bg opacity-40" />
-      <motion.div style={{ y }} className="pointer-events-none absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full bg-primary/30 blur-3xl animate-blob" />
-      <motion.div style={{ y }} className="pointer-events-none absolute top-40 -right-32 h-[460px] w-[460px] rounded-full bg-highlight/25 blur-3xl animate-blob" />
-      <div className="pointer-events-none absolute inset-0">
-        {[...Array(14)].map((_, i) => (
+    <section
+      id="home"
+      ref={heroRef}
+      className="relative min-h-screen overflow-hidden pt-28 md:pt-32 pb-16"
+      style={{
+        // @ts-expect-error CSS vars
+        "--mx": "50%", "--my": "40%",
+      }}
+    >
+      {/* Aurora / mesh background */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-0 grid-bg opacity-[0.25]" />
+        <div className="absolute inset-0 [background:radial-gradient(1200px_600px_at_15%_10%,oklch(0.65_0.19_258/0.35),transparent_60%),radial-gradient(900px_500px_at_90%_20%,oklch(0.78_0.14_210/0.28),transparent_60%),radial-gradient(700px_500px_at_50%_100%,oklch(0.55_0.22_280/0.22),transparent_60%)]" />
+        <div className="absolute -top-32 left-1/2 h-[70vh] w-[70vh] -translate-x-1/2 rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,oklch(0.65_0.19_258/0.35),oklch(0.78_0.14_210/0.35),oklch(0.55_0.22_280/0.35),oklch(0.65_0.19_258/0.35))] blur-3xl animate-aurora" />
+        {/* Radial vignette bottom */}
+        <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-b from-transparent to-background" />
+      </div>
+
+      {/* Cursor spotlight */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-60 transition-opacity"
+        style={{
+          background:
+            "radial-gradient(400px circle at var(--mx) var(--my), oklch(0.65 0.19 258 / 0.18), transparent 60%)",
+        }}
+      />
+
+      {/* Floating particles */}
+      <motion.div style={{ y: yParallax }} className="pointer-events-none absolute inset-0">
+        {[...Array(18)].map((_, i) => (
           <span
             key={i}
-            className="absolute block h-1 w-1 rounded-full bg-white/40"
+            className="absolute block h-1 w-1 rounded-full bg-white/50"
             style={{
-              left: `${(i * 73) % 100}%`,
-              top: `${(i * 47) % 100}%`,
-              animation: `float ${6 + (i % 5)}s ease-in-out ${i * 0.4}s infinite`,
+              left: `${(i * 53) % 100}%`,
+              top: `${(i * 37) % 100}%`,
+              animation: `float ${5 + (i % 6)}s ease-in-out ${i * 0.3}s infinite`,
               boxShadow: "0 0 12px rgba(59,130,246,0.7)",
             }}
           />
         ))}
-      </div>
+      </motion.div>
 
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-[1.15fr_1fr]">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs">
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-[1.15fr_1fr]">
+        {/* LEFT */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          {/* Status pill */}
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full glass-strong px-3 py-1.5 text-xs">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
             </span>
-            Available for opportunities · 2025 Graduate
+            <span className="text-muted-foreground">Available for opportunities</span>
+            <span className="text-white/20">·</span>
+            <span className="text-foreground">Class of 2025</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold leading-[1.05]">
-            Hi, I'm <span className="text-gradient">Sabarish</span>
-            <br />
-            <span className="text-foreground/90">a </span>
-            <span className="relative">
-              <span className="text-gradient">{typed || "\u00A0"}</span>
-              <span className="ml-1 inline-block h-[0.9em] w-[3px] translate-y-1 bg-highlight animate-caret" />
+
+          {/* Terminal-style path chip */}
+          <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-black/30 px-3 py-1 font-mono text-[11px] text-highlight">
+            <span className="text-emerald-400">~/portfolio</span>
+            <span className="text-white/40">$</span>
+            <span>whoami</span>
+          </div>
+
+          <h1 className="text-[2.75rem] leading-[1.02] sm:text-6xl md:text-7xl font-bold tracking-tight">
+            <span className="block text-foreground/95">Sabarish</span>
+            <span className="block">
+              <span className="text-gradient">Kumar</span>{" "}
+              <span className="text-foreground/95">Srinivasan</span>
             </span>
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-            Building scalable software. Solving real problems. Creating meaningful digital experiences with Java, Spring Boot, and modern web technologies.
+
+          {/* Typing role in bordered chip */}
+          <div className="mt-6 inline-flex min-h-[44px] items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 backdrop-blur">
+            <span className="grid h-6 w-6 place-items-center rounded-full bg-gradient-to-br from-primary to-highlight text-[10px] font-bold text-primary-foreground">
+              ›_
+            </span>
+            <span className="font-mono text-sm md:text-base">
+              <span className="text-muted-foreground">role = </span>
+              <span className="text-gradient">"{typed || "\u00A0"}"</span>
+              <span className="ml-0.5 inline-block h-[1em] w-[2px] translate-y-[3px] bg-highlight animate-caret" />
+            </span>
+          </div>
+
+          <p className="mt-6 max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed">
+            Building{" "}
+            <span className="text-foreground">scalable software</span>. Solving{" "}
+            <span className="text-foreground">real problems</span>. Creating meaningful digital experiences with Java, Spring Boot, and modern web technologies.
           </p>
 
+          {/* CTAs */}
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href="#projects" className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-highlight px-6 py-3 font-medium text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)] transition-transform hover:scale-[1.03]">
-              View Projects <FaChevronRight className="transition-transform group-hover:translate-x-1" />
+            <a
+              href="#projects"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-primary to-highlight px-6 py-3 font-medium text-primary-foreground shadow-[0_10px_30px_-10px_rgba(59,130,246,0.7)] transition-transform hover:scale-[1.03]"
+            >
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/30 to-white/0 transition-transform duration-700 group-hover:translate-x-full" />
+              <span className="relative">View Projects</span>
+              <FaChevronRight className="relative transition-transform group-hover:translate-x-1" />
             </a>
-            <a href="#" className="inline-flex items-center gap-2 rounded-full glass px-6 py-3 font-medium hover:bg-white/10">
-              <FaDownload /> Download Resume
+            <a
+              href="#"
+              className="inline-flex items-center gap-2 rounded-full glass px-6 py-3 font-medium hover:bg-white/10"
+            >
+              <FaDownload /> Resume
             </a>
-            <a href="#contact" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 font-medium hover:border-primary/60 hover:text-primary">
-              Contact Me
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 font-medium hover:border-primary/60 hover:text-primary"
+            >
+              Contact
             </a>
           </div>
 
-          <div className="mt-10 flex items-center gap-4">
-            <span className="text-xs uppercase tracking-widest text-muted-foreground">Find me on</span>
-            <div className="h-px flex-1 max-w-24 bg-gradient-to-r from-white/20 to-transparent" />
-            <div className="flex gap-3">
+          {/* Mini stats bento */}
+          <div className="mt-8 grid max-w-lg grid-cols-3 gap-2">
+            {[
+              { n: "3+", l: "Projects" },
+              { n: "30+", l: "Skills" },
+              { n: "7.54", l: "CGPA" },
+            ].map((s) => (
+              <div key={s.l} className="rounded-2xl glass px-4 py-3">
+                <div className="text-lg font-bold text-gradient">{s.n}</div>
+                <div className="text-[11px] uppercase tracking-widest text-muted-foreground">{s.l}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Socials */}
+          <div className="mt-8 flex items-center gap-4">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Connect</span>
+            <div className="h-px w-10 bg-gradient-to-r from-white/30 to-transparent" />
+            <div className="flex gap-2">
               {[
-                { icon: <FaGithub />, href: "https://github.com/au820621104070" },
-                { icon: <FaLinkedin />, href: "https://www.linkedin.com/in/sabarish-kumar-srinivasan-91a178273" },
-                { icon: <FaEnvelope />, href: "mailto:sabarishsri03@gmail.com" },
-              ].map((s, i) => (
-                <a key={i} href={s.href} target="_blank" rel="noreferrer"
-                  className="grid h-11 w-11 place-items-center rounded-xl glass text-lg transition-all hover:text-primary hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(59,130,246,0.6)]">
+                { icon: <FaGithub />, href: "https://github.com/au820621104070", label: "GitHub" },
+                { icon: <FaLinkedin />, href: "https://www.linkedin.com/in/sabarish-kumar-srinivasan-91a178273", label: "LinkedIn" },
+                { icon: <FaEnvelope />, href: "mailto:sabarishsri03@gmail.com", label: "Email" },
+              ].map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.label}
+                  className="grid h-10 w-10 place-items-center rounded-xl glass text-base transition-all hover:text-primary hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(59,130,246,0.6)]"
+                >
                   {s.icon}
                 </a>
               ))}
@@ -231,39 +340,152 @@ function Hero() {
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, delay: 0.15 }}
-          className="relative mx-auto w-full max-w-md">
-          <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-primary/40 via-highlight/20 to-transparent blur-2xl" />
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] glass-strong p-2 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]">
-            <div className="relative h-full w-full overflow-hidden rounded-[1.6rem]">
-              <img src={heroPortrait} alt="Sabarish Kumar Srinivasan" width={1024} height={1280} className="h-full w-full object-cover" />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+        {/* RIGHT — Portrait with orbits */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.15 }}
+          className="relative mx-auto flex w-full max-w-md items-center justify-center py-6"
+        >
+          {/* Orbital rings */}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <div className="relative h-[112%] w-[112%] animate-spin-slow">
+              <div className="absolute inset-0 rounded-full border border-dashed border-white/10" />
+              {orbitTech.slice(0, 3).map((t, i) => {
+                const angle = (i / 3) * Math.PI * 2;
+                const r = 50;
+                const x = 50 + Math.cos(angle) * r;
+                const y = 50 + Math.sin(angle) * r;
+                return (
+                  <div
+                    key={i}
+                    className={`absolute grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-xl glass-strong text-lg animate-spin-reverse ${t.color}`}
+                    style={{ left: `${x}%`, top: `${y}%` }}
+                  >
+                    {t.icon}
+                  </div>
+                );
+              })}
             </div>
           </div>
-          {/* Floating tags */}
-          <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 5, repeat: Infinity }}
-            className="absolute -left-4 top-16 rounded-2xl glass-strong px-4 py-3 shadow-lg">
-            <div className="flex items-center gap-2 text-sm">
-              <FaJava className="text-lg text-[#f89820]" /> Java · Spring Boot
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <div className="relative h-[132%] w-[132%] animate-spin-reverse">
+              <div className="absolute inset-0 rounded-full border border-dashed border-white/[0.07]" />
+              {orbitTech.slice(3).map((t, i) => {
+                const angle = (i / 3) * Math.PI * 2 + Math.PI / 4;
+                const r = 50;
+                const x = 50 + Math.cos(angle) * r;
+                const y = 50 + Math.sin(angle) * r;
+                return (
+                  <div
+                    key={i}
+                    className={`absolute grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-xl glass-strong text-lg animate-spin-slow ${t.color}`}
+                    style={{ left: `${x}%`, top: `${y}%` }}
+                  >
+                    {t.icon}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Glow */}
+          <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-primary/40 via-highlight/25 to-transparent blur-3xl" />
+
+          {/* Portrait */}
+          <div className="relative aspect-square w-[78%] overflow-hidden rounded-full glass-strong p-1.5 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]">
+            <div className="relative h-full w-full overflow-hidden rounded-full">
+              <img
+                src={heroPortrait}
+                alt="Sabarish Kumar Srinivasan"
+                width={1024}
+                height={1280}
+                className="h-full w-full object-cover"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent" />
+            </div>
+          </div>
+
+          {/* Floating badges */}
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 5, repeat: Infinity }}
+            className="absolute left-0 top-6 z-10 rounded-2xl glass-strong px-3 py-2 shadow-lg"
+          >
+            <div className="flex items-center gap-2 text-xs">
+              <div className="grid h-7 w-7 place-items-center rounded-lg bg-[#f89820]/20 text-[#f89820]">
+                <FaJava />
+              </div>
+              <div>
+                <div className="font-semibold">Java · Spring</div>
+                <div className="text-[10px] text-muted-foreground">Backend stack</div>
+              </div>
             </div>
           </motion.div>
-          <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 6, repeat: Infinity, delay: 0.5 }}
-            className="absolute -right-4 bottom-24 rounded-2xl glass-strong px-4 py-3 shadow-lg">
-            <div className="flex items-center gap-2 text-sm">
-              <FaCode className="text-primary" /> Full Stack
+
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 6, repeat: Infinity, delay: 0.5 }}
+            className="absolute -right-2 bottom-16 z-10 rounded-2xl glass-strong px-3 py-2 shadow-lg"
+          >
+            <div className="flex items-center gap-2 text-xs">
+              <div className="grid h-7 w-7 place-items-center rounded-lg bg-primary/20 text-primary">
+                <FaCode />
+              </div>
+              <div>
+                <div className="font-semibold">Full Stack</div>
+                <div className="text-[10px] text-muted-foreground">End-to-end</div>
+              </div>
             </div>
           </motion.div>
-          <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4.5, repeat: Infinity, delay: 1 }}
-            className="absolute -bottom-4 left-10 rounded-2xl glass-strong px-4 py-3 shadow-lg">
-            <div className="flex items-center gap-2 text-sm">
-              <FaCloud className="text-highlight" /> Cloud Ready
+
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 4.5, repeat: Infinity, delay: 1 }}
+            className="absolute bottom-2 left-6 z-10 rounded-2xl glass-strong px-3 py-2 shadow-lg"
+          >
+            <div className="flex items-center gap-2 text-xs">
+              <div className="grid h-7 w-7 place-items-center rounded-lg bg-highlight/20 text-highlight">
+                <FaCloud />
+              </div>
+              <div>
+                <div className="font-semibold">Cloud Ready</div>
+                <div className="text-[10px] text-muted-foreground">IaaS · PaaS</div>
+              </div>
             </div>
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Marquee tech ticker */}
+      <div className="relative mt-16 border-y border-white/5 bg-white/[0.02]">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
+        <div className="flex overflow-hidden py-4">
+          <div className="flex shrink-0 animate-marquee gap-10 pr-10 font-mono text-sm text-muted-foreground">
+            {[...stack, ...stack].map((t, i) => (
+              <span key={i} className="inline-flex items-center gap-2 whitespace-nowrap">
+                <span className="h-1 w-1 rounded-full bg-primary" />
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="mt-10 flex justify-center">
+        <a href="#about" className="group flex flex-col items-center gap-2 text-xs text-muted-foreground">
+          <span className="uppercase tracking-[0.3em]">Scroll</span>
+          <span className="flex h-9 w-5 justify-center rounded-full border border-white/15 p-1">
+            <span className="h-2 w-0.5 animate-float rounded-full bg-primary" />
+          </span>
+        </a>
+      </div>
     </section>
   );
 }
+
 
 /* ----------------------------- About ----------------------------- */
 
